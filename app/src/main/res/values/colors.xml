@@ -3,5 +3,7 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="btnColor">#cdc1b5</color>
+    <color name="btnColor">#4F4F4F</color>
+    <color name="backGridColor">#A3A3A3</color>
+    <color name="backgroundColor">#363636</color>
 </resources>

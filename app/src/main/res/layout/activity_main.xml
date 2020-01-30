@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:orientation="vertical"
     android:paddingRight="16dp"
-    android:background="#fbf8ef"
+    android:background="@color/backgroundColor"
     android:layout_weight="7"
     tools:context=".MainActivity">
 
@@ -19,7 +19,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:textColor="#776e65"
+            android:textColor="@color/backGridColor"
             android:id="@+id/text_2048"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -37,7 +37,7 @@
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#bbada0"
+            android:background="@color/btnColor"
             android:layout_weight="2"
             android:layout_marginRight="5dp" />
 
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:background="#bbada0" />
+            android:background="@color/btnColor" />
 
     </LinearLayout>
 
@@ -60,7 +60,7 @@
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
-            android:textColor="#776e65"
+            android:textColor="@color/backGridColor"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="Join the numbers and get to the"
@@ -72,7 +72,7 @@
             android:layout_height="match_parent"
             android:layout_weight="5"
             android:fontFamily="cursive"
-            android:textColor="#656565"
+            android:textColor="@color/backGridColor"
             android:text="2048 tile !"
             android:textSize="18dp" />
 
@@ -85,19 +85,23 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Restart"
-            android:background="#fbf8ef"
+            android:layout_weight="1"
+            android:background="@color/backgroundColor"
+            android:drawableStart="@android:drawable/ic_menu_rotate"
+            android:paddingLeft="70dp"
             android:textAlignment="textStart"
-            android:textColor="#fe8205"
-            android:textSize="25dp"
-            android:layout_weight="1"/>
+            android:textColor="@color/backGridColor"
+            android:textSize="25dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#fbf8ee"
-            android:text="Undo"
-            android:textColor="#fe8205"
+            android:layout_weight="1"
+            android:background="@color/backgroundColor"
+            android:paddingRight="20dp"
+            android:paddingBottom="30dp"
+            android:text="Menu"
+            android:textColor="@color/backGridColor"
             android:textSize="25dp" />
 
     </LinearLayout>
@@ -107,7 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="5"
         android:orientation="vertical"
-        android:background="#bbada0">
+        android:background="@color/backGridColor">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -279,7 +283,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="#fef8ef"/>
+            android:background="@color/backgroundColor" />
 
     </LinearLayout>
 

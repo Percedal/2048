@@ -24,43 +24,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_main);
-		mContentView = findViewById(R.id.fullscreen_content);
+		mContentView = findViewById(R.id.grille);
 		mContentView.setOnTouchListener(new TouchListener(this));
-	}
-
-//	private void toggleFullscreen() {
-//		if (isSystemUIVisible) {
-//			hideSystemUI();
-//		} else {
-//			showSystemUI();
-//		}
-//	}
-
-//	private void hideSystemUI() {
-//		isSystemUIVisible = false;
-//		mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-//				| View.SYSTEM_UI_FLAG_FULLSCREEN
-//				| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//				| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//				| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//				| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-//	}
-//
-//	private void showSystemUI() {
-//		isSystemUIVisible = true;
-//		mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//				| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//				| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-//	}
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		
-		// Trigger the initial hide() shortly after the activity has been
-		// created, to briefly hint to the user that UI controls
-		// are available.
-//        delayedHide(100);
 	}
 	
 	public void onSwipeRight() {

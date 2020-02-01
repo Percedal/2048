@@ -6,25 +6,29 @@ import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class Menu_Activity extends AppCompatActivity {
     
-    private Button btnMenu = null;
+    private Button btnGrid = null;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu_);
         
-        btnMenu = findViewById(R.id.btnMenu1);
+        btnGrid = findViewById(R.id.buttonGrid);
         
-        btnMenu.setOnClickListener(new View.OnClickListener() {
+        btnGrid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent menuActivity = new Intent(MainActivity.this, Menu_Activity.class);
-                startActivity(menuActivity);
+                Intent mainActivity = new Intent(Menu_Activity.this, MainActivity.class);
+                startActivity(mainActivity);
             }
         });
     }
 }
+
+
+
+
 
 

@@ -9,6 +9,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import static com.example.a2048.SwipeDirectionEnum.*;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -30,6 +32,13 @@ public class MainActivity extends Activity {
 		mContentView.setOnTouchListener(new TouchListener(this));
 		
 		grille = new Grille(4, (LinearLayout) findViewById(R.id.grille));
+		
+		findViewById(R.id.btnUp).setOnClickListener(v -> grille.swipe(NORD));
+		findViewById(R.id.btnDown).setOnClickListener(v -> grille.swipe(SUD));
+		findViewById(R.id.btnLeft).setOnClickListener(v -> grille.swipe(OUEST));
+		findViewById(R.id.btnRigth).setOnClickListener(v -> grille.swipe(EST));
+		
+		findViewById(R.id.btnReload).setOnClickListener(v -> grille.reset());
 	}
 	
 	@Override
@@ -39,18 +48,22 @@ public class MainActivity extends Activity {
 	
 	public void onSwipeRight() {
 		Log.d(DEBUG_TAG, "Swipe Right !*---------");
+		grille.swipe(EST);
 	}
 	
 	public void onSwipeLeft() {
 		Log.d(DEBUG_TAG, "Swipe Left !*---------");
+		grille.swipe(OUEST);
 	}
 	
 	public void onSwipeTop() {
 		Log.d(DEBUG_TAG, "Swipe Top !*---------");
+		grille.swipe(NORD);
 	}
 	
 	public void onSwipeBottom() {
 		Log.d(DEBUG_TAG, "Swipe Bottom !*---------");
+		grille.swipe(SUD);
 	}
 	
 	/**

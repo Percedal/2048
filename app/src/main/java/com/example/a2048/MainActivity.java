@@ -7,78 +7,63 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
+
+import static com.example.a2048.SwipeDirectionEnum.*;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActivity extends Activity {
+public class MainActivity extends Activity {
 	private static final String DEBUG_TAG = "____DEBUG____";
 	
-	private boolean isSystemUIVisible;
+	//	private boolean isSystemUIVisible;
 	private View mContentView;
+	private Grille grille;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.activity_fullscreen);
-		mContentView = findViewById(R.id.fullscreen_content);
+		setContentView(R.layout.activity_main);
+		mContentView = findViewById(R.id.grille);
 		mContentView.setOnTouchListener(new TouchListener(this));
 		
-		hideSystemUI();
-	}
-	
-	private void toggleFullscreen() {
-		if (isSystemUIVisible) {
-			hideSystemUI();
-		} else {
-			showSystemUI();
-		}
-	}
-	
-	private void hideSystemUI() {
-		isSystemUIVisible = false;
-		mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-				| View.SYSTEM_UI_FLAG_FULLSCREEN
-				| View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-				| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-				| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-				| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-	}
-	
-	private void showSystemUI() {
-		isSystemUIVisible = true;
-		mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-				| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-				| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+		grille = new Grille(4, (LinearLayout) findViewById(R.id.grille));
+		
+		findViewById(R.id.btnUp).setOnClickListener(v -> grille.swipe(NORD));
+		findViewById(R.id.btnDown).setOnClickListener(v -> grille.swipe(SUD));
+		findViewById(R.id.btnLeft).setOnClickListener(v -> grille.swipe(OUEST));
+		findViewById(R.id.btnRigth).setOnClickListener(v -> grille.swipe(EST));
+		
+		findViewById(R.id.btnReload).setOnClickListener(v -> grille.reset());
 	}
 	
 	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		
-		// Trigger the initial hide() shortly after the activity has been
-		// created, to briefly hint to the user that UI controls
-		// are available.
-//        delayedHide(100);
+	public void onBackPressed() {
+		grille.spawn();
 	}
 	
 	public void onSwipeRight() {
 		Log.d(DEBUG_TAG, "Swipe Right !*---------");
+		grille.swipe(EST);
 	}
 	
 	public void onSwipeLeft() {
 		Log.d(DEBUG_TAG, "Swipe Left !*---------");
+		grille.swipe(OUEST);
 	}
 	
 	public void onSwipeTop() {
 		Log.d(DEBUG_TAG, "Swipe Top !*---------");
+		grille.swipe(NORD);
 	}
 	
 	public void onSwipeBottom() {
 		Log.d(DEBUG_TAG, "Swipe Bottom !*---------");
+		grille.swipe(SUD);
 	}
 	
 	/**
@@ -133,6 +118,4 @@ public class FullscreenActivity extends Activity {
 			}
 		}
 	}
-	
-	
 }

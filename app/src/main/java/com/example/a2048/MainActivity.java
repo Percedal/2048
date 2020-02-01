@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -17,6 +18,7 @@ public class MainActivity extends Activity {
 	
 	//	private boolean isSystemUIVisible;
 	private View mContentView;
+	private Grille grille;
 	
 	
 	@Override
@@ -26,6 +28,13 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		mContentView = findViewById(R.id.grille);
 		mContentView.setOnTouchListener(new TouchListener(this));
+		
+		grille = new Grille(4, (LinearLayout) findViewById(R.id.grille));
+	}
+	
+	@Override
+	public void onBackPressed() {
+		grille.spawn();
 	}
 	
 	public void onSwipeRight() {
@@ -96,6 +105,4 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
-	
-	
 }

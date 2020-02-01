@@ -6,6 +6,19 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--        <item name="android:textViewStyle">@style/TileStyle</item>-->
     </style>
 
+    <!--    Test non concluant d'utilisation des styles -->
+    <!--    <style name="TileStyle">-->
+    <!--        <item name="android:layout_marginLeft">5px</item>-->
+    <!--        <item name="android:layout_marginBottom">5px</item>-->
+    <!--        <item name="android:layout_marginRight">5px</item>-->
+    <!--        <item name="android:layout_marginTop">5px</item>-->
+    <!--        <item name="android:layout_weight">1</item>-->
+    <!--        <item name="android:colorBackground">@color/backgroundTileColor</item>-->
+    <!--        <item name="android:gravity">center</item>-->
+    <!--        <item name="android:text">0</item>-->
+    <!--        <item name="android:textColor">@color/textTileColor</item>-->
+    <!--    </style>-->
 </resources>

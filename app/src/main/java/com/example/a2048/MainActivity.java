@@ -2,6 +2,7 @@ package com.example.a2048;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -39,6 +40,10 @@ public class MainActivity extends Activity {
 		findViewById(R.id.btnRigth).setOnClickListener(v -> grille.swipe(EST));
 		
 		findViewById(R.id.btnReload).setOnClickListener(v -> grille.reset());
+		findViewById(R.id.btnMenu).setOnClickListener(v -> {
+			Intent mainActivity = new Intent(MainActivity.this, MenuActivity.class);
+			startActivity(mainActivity);
+		});
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-package com.example.a2048;
+package com.game2048;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
+import com.game2048.core.Grid;
+import com.game2048.view.GridView;
 
-import static com.example.a2048.SwipeDirectionEnum.*;
+import static com.game2048.SwipeDirectionEnum.*;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -21,24 +23,30 @@ public class MainActivity extends Activity {
 	
 	//	private boolean isSystemUIVisible;
 	private View gridView;
-	private Grille grille;
+	private Grid grid;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+//		gridView = findViewById(R.id.grid);
+//		gridView.setOnTouchListener(new TouchListener(this));
 		
-		gridView = findViewById(R.id.grille);
+		grid = new Grid(getIntent().getIntExtra("gridSize", 0));
+		gridView = new GridView(this, grid);
 		gridView.setOnTouchListener(new TouchListener(this));
 		
-		grille = new Grille(4, (LinearLayout) findViewById(R.id.grille));
+		ViewGroup container = findViewById(R.id.gridContainer);
+		container.removeAllViews();
+		container.addView(gridView);
 		
-		findViewById(R.id.btnUp).setOnClickListener(v -> grille.swipe(NORD));
-		findViewById(R.id.btnDown).setOnClickListener(v -> grille.swipe(SUD));
-		findViewById(R.id.btnLeft).setOnClickListener(v -> grille.swipe(OUEST));
-		findViewById(R.id.btnRigth).setOnClickListener(v -> grille.swipe(EST));
-		findViewById(R.id.btnReload).setOnClickListener(v -> grille.reset());
+		findViewById(R.id.btnUp).setOnClickListener(v -> grid.swipe(NORTH));
+		findViewById(R.id.btnDown).setOnClickListener(v -> grid.swipe(SOUTH));
+		findViewById(R.id.btnLeft).setOnClickListener(v -> grid.swipe(WEST));
+		findViewById(R.id.btnRigth).setOnClickListener(v -> grid.swipe(EST));
+		findViewById(R.id.btnReload).setOnClickListener(v -> grid.reset());
 		findViewById(R.id.btnMenu).setOnClickListener(v -> {
 			Intent mainActivity = new Intent(MainActivity.this, MenuActivity.class);
 			startActivity(mainActivity);
@@ -47,22 +55,22 @@ public class MainActivity extends Activity {
 	
 	public void onSwipeRight() {
 		Log.d(DEBUG_TAG, "Swipe Right !*---------");
-		grille.swipe(EST);
+		grid.swipe(EST);
 	}
 	
 	public void onSwipeLeft() {
 		Log.d(DEBUG_TAG, "Swipe Left !*---------");
-		grille.swipe(OUEST);
+		grid.swipe(WEST);
 	}
 	
 	public void onSwipeTop() {
 		Log.d(DEBUG_TAG, "Swipe Top !*---------");
-		grille.swipe(NORD);
+		grid.swipe(NORTH);
 	}
 	
 	public void onSwipeBottom() {
 		Log.d(DEBUG_TAG, "Swipe Bottom !*---------");
-		grille.swipe(SUD);
+		grid.swipe(SOUTH);
 	}
 	
 	/**

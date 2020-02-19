@@ -1,4 +1,4 @@
-package com.example.a2048;
+package com.game2048;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +16,7 @@ public class MenuActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+//		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_menu);
 		
 		btnGrid = findViewById(R.id.btnGrid);
@@ -40,6 +41,10 @@ public class MenuActivity extends AppCompatActivity {
 		textGridSize = findViewById(R.id.textGridSize);
 		
 		updateGridSizeTextView();
+		
+		
+		//-------------------
+		btnGrid.performClick();
 	}
 	
 	private void updateGridSizeTextView() {

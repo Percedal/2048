@@ -20,17 +20,17 @@ public class MainActivity extends Activity {
 	private static final String DEBUG_TAG = "____DEBUG____";
 	
 	//	private boolean isSystemUIVisible;
-	private View mContentView;
+	private View gridView;
 	private Grille grille;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.activity_main);
-		mContentView = findViewById(R.id.grille);
-		mContentView.setOnTouchListener(new TouchListener(this));
+		
+		gridView = findViewById(R.id.grille);
+		gridView.setOnTouchListener(new TouchListener(this));
 		
 		grille = new Grille(4, (LinearLayout) findViewById(R.id.grille));
 		
@@ -38,17 +38,11 @@ public class MainActivity extends Activity {
 		findViewById(R.id.btnDown).setOnClickListener(v -> grille.swipe(SUD));
 		findViewById(R.id.btnLeft).setOnClickListener(v -> grille.swipe(OUEST));
 		findViewById(R.id.btnRigth).setOnClickListener(v -> grille.swipe(EST));
-		
 		findViewById(R.id.btnReload).setOnClickListener(v -> grille.reset());
 		findViewById(R.id.btnMenu).setOnClickListener(v -> {
 			Intent mainActivity = new Intent(MainActivity.this, MenuActivity.class);
 			startActivity(mainActivity);
 		});
-	}
-	
-	@Override
-	public void onBackPressed() {
-		grille.spawn();
 	}
 	
 	public void onSwipeRight() {

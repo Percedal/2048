@@ -20,8 +20,9 @@ public class MenuActivity extends AppCompatActivity {
 		
 		btnGrid = findViewById(R.id.btnGrid);
 		btnGrid.setOnClickListener(v -> {
-			Intent mainActivity = new Intent(MenuActivity.this, MainActivity.class);
-			startActivity(mainActivity);
+			Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+			intent.putExtra("gridSize", gridSize);
+			startActivity(intent);
 		});
 		
 		btnGridUp = findViewById(R.id.btnGridSizeUp);

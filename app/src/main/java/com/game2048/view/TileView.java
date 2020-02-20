@@ -1,18 +1,21 @@
 package com.game2048.view;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import com.game2048.R;
 import com.game2048.core.Tile;
+import com.game2048.core.util.Observable;
+import com.game2048.core.util.Observer;
 
-import java.util.Observable;
-import java.util.Observer;
 
 public class TileView extends TextView implements Observer {
+	Tile tile = null;
+
 	public TileView(Context context, Tile tile) {
 		super(context);
+		this.tile = tile;
 		setGravity(Gravity.CENTER);
 
 //		ViewGroup.MarginLayoutParams margins = (ViewGroup.MarginLayoutParams) getLayoutParams();
@@ -24,16 +27,16 @@ public class TileView extends TextView implements Observer {
 //		params.setMargins(left, top, right, bottom);
 //		view.setLayoutParams(params);
 //		view.getLayoutParams().
-		setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//		setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
 		setBackgroundResource(R.color.backgroundTileColor);
 		setTextColor(context.getResources().getColor(R.color.textTileColor, null));
 		setTextSize(50);
 		setText(tile.getValue() + "");
-		tile.addObserver(this);
 	}
 	
 	@Override
-	public void update(Observable o, Object arg) {
-		setText(((Tile) o).getValue());
+	public void update(Observable observable) {
+		Log.d("Observer", "Listener");
+		setText(tile.getValue()+"");
 	}
 }

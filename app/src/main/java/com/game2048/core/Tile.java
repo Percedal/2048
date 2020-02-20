@@ -1,8 +1,8 @@
 package com.game2048.core;
 
 import com.game2048.SwipeDirectionEnum;
+import com.game2048.core.util.Observable;
 
-import java.util.Observable;
 import java.util.Random;
 
 public class Tile extends Observable {
@@ -17,22 +17,6 @@ public class Tile extends Observable {
 		this.x = x;
 		this.y = y;
 		this.val = 0;
-
-//		view.setGravity(Gravity.CENTER);
-//		view.setTextSize(50);
-//		ViewGroup.MarginLayoutParams margins = (ViewGroup.MarginLayoutParams) view.getLayoutParams();
-//		margins.setMargins(5, 5, 5, 5);
-//		LayoutParams params = new LayoutParams(
-//				LayoutParams.WRAP_CONTENT,
-//				LayoutParams.WRAP_CONTENT
-//		);
-//		params.setMargins(left, top, right, bottom);
-//		view.setLayoutParams(params);
-//		view.getLayoutParams().
-
-//		view.setBackgroundColor(view.getContext().getResources().getColor(R.color.backgroundTileColor, null));
-//		view.setTextColor(view.getContext().getResources().getColor(R.color.textTileColor, null));
-//		updateView();
 	}
 	
 	public void updateNeibourgh() {
@@ -50,7 +34,7 @@ public class Tile extends Observable {
 	public boolean isEmpty() {
 		return val == 0;
 	}
-	
+
 	public void spawn(Random rand) {
 		val = (rand.nextInt(2) + 1) * 2;
 		notifyObservers();
@@ -201,15 +185,6 @@ public class Tile extends Observable {
 	
 	@Override
 	public String toString() {
-		return "Tile{" +
-				"grille=" + grid +
-				", valeur=" + val +
-				", x=" + x +
-				", y=" + y +
-				", nord=" + north +
-				", sud=" + south +
-				", est=" + est +
-				", ouest=" + west +
-				'}';
+		return String.valueOf(val);
 	}
 }

@@ -11,7 +11,7 @@ public class MenuActivity extends AppCompatActivity {
 	private Button btnGridUp = null;
 	private Button btnGridDown = null;
 	private TextView textGridSize = null;
-	private int gridSize = 4;
+	private static int gridSize = 4;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +41,6 @@ public class MenuActivity extends AppCompatActivity {
 		textGridSize = findViewById(R.id.textGridSize);
 		
 		updateGridSizeTextView();
-		
-		
-		//-------------------
-		btnGrid.performClick();
 	}
 	
 	private void updateGridSizeTextView() {

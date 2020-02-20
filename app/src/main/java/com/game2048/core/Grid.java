@@ -96,6 +96,7 @@ public class Grid {
 				break;
 		}
 		spawn();
+		Log.d("Debug", ""+getCaseLigCol(0, 0));
 	}
 	
 	public int getHeight() {

@@ -30,16 +30,33 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-//		gridView = findViewById(R.id.grid);
-//		gridView.setOnTouchListener(new TouchListener(this));
 		
 		grid = new Grid(getIntent().getIntExtra("gridSize", 0));
 		gridView = new GridView(this, grid);
-		gridView.setOnTouchListener(new TouchListener(this));
 		
 		ViewGroup container = findViewById(R.id.gridContainer);
 		container.removeAllViews();
+		container.setOnTouchListener(new OnSwipeTouchListener(this) {
+			public void onSwipeRight() {
+				Log.d(DEBUG_TAG, "Swipe Right !*---------");
+				grid.swipe(EST);
+			}
+
+			public void onSwipeLeft() {
+				Log.d(DEBUG_TAG, "Swipe Left !*---------");
+				grid.swipe(WEST);
+			}
+
+			public void onSwipeTop() {
+				Log.d(DEBUG_TAG, "Swipe Top !*---------");
+				grid.swipe(NORTH);
+			}
+
+			public void onSwipeBottom() {
+				Log.d(DEBUG_TAG, "Swipe Bottom !*---------");
+				grid.swipe(SOUTH);
+			}
+		});
 		container.addView(gridView);
 		
 		findViewById(R.id.btnUp).setOnClickListener(v -> grid.swipe(NORTH));
@@ -53,50 +70,47 @@ public class MainActivity extends Activity {
 		});
 	}
 	
-	public void onSwipeRight() {
-		Log.d(DEBUG_TAG, "Swipe Right !*---------");
-		grid.swipe(EST);
-	}
-	
-	public void onSwipeLeft() {
-		Log.d(DEBUG_TAG, "Swipe Left !*---------");
-		grid.swipe(WEST);
-	}
-	
-	public void onSwipeTop() {
-		Log.d(DEBUG_TAG, "Swipe Top !*---------");
-		grid.swipe(NORTH);
-	}
-	
-	public void onSwipeBottom() {
-		Log.d(DEBUG_TAG, "Swipe Bottom !*---------");
-		grid.swipe(SOUTH);
-	}
-	
 	/**
 	 * Listener des swipe
 	 */
-	private final class TouchListener implements View.OnTouchListener {
+	private class OnSwipeTouchListener implements View.OnTouchListener {
 		private final GestureDetector swipeGesture;
 		
-		public TouchListener(Context ctx) {
-			swipeGesture = new GestureDetector(ctx, new SwipeManager());
+		public OnSwipeTouchListener(Context ctx) {
+			swipeGesture = new GestureDetector(ctx, new SwipeListener());
 		}
 		
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
 			return swipeGesture.onTouchEvent(event);
 		}
+
+		public void onSwipeRight() {
+
+		}
+
+		public void onSwipeLeft() {
+
+		}
+
+		public void onSwipeTop() {
+
+		}
+
+		public void onSwipeBottom() {
+
+		}
 		
 		/**
 		 * Gestionnaire des swipe
 		 */
-		private final class SwipeManager extends GestureDetector.SimpleOnGestureListener {
+		private final class SwipeListener extends GestureDetector.SimpleOnGestureListener {
 			private static final int SWIPE_THRESHOLD = 100;
 			private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 			
 			@Override
 			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+				Log.d("Swipe", "Swing !");
 				boolean result = false;
 				try {
 					float diffY = e2.getY() - e1.getY();
@@ -122,6 +136,11 @@ public class MainActivity extends Activity {
 					exception.printStackTrace();
 				}
 				return result;
+			}
+
+			@Override
+			public boolean onDown(MotionEvent e) {
+				return true;
 			}
 		}
 	}

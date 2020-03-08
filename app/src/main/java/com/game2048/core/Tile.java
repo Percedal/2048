@@ -1,6 +1,6 @@
 package com.game2048.core;
 
-import com.game2048.SwipeDirectionEnum;
+import com.game2048.core.util.EnumDirection;
 import com.game2048.core.util.Observable;
 
 import java.util.Random;
@@ -20,10 +20,10 @@ public class Tile extends Observable {
 	}
 	
 	public void updateNeibourgh() {
-		this.north = y == 0 ? null : grid.getCaseLigCol(y - 1, x);
-		this.south = y == grid.getHeight() - 1 ? null : grid.getCaseLigCol(y + 1, x);
-		this.west = x == 0 ? null : grid.getCaseLigCol(y, x - 1);
-		this.est = x == grid.getWidth() - 1 ? null : grid.getCaseLigCol(y, x + 1);
+		this.north = y == 0 ? null : grid.getTileLigCol(y - 1, x);
+		this.south = y == grid.getHeight() - 1 ? null : grid.getTileLigCol(y + 1, x);
+		this.west = x == 0 ? null : grid.getTileLigCol(y, x - 1);
+		this.est = x == grid.getWidth() - 1 ? null : grid.getTileLigCol(y, x + 1);
 	}
 	
 	/**
@@ -34,10 +34,11 @@ public class Tile extends Observable {
 	public boolean isEmpty() {
 		return val == 0;
 	}
-
-	public void spawn(Random rand) {
+	
+	public int spawn(Random rand) {
 		val = (rand.nextInt(2) + 1) * 2;
 		notifyObservers();
+		return val;
 	}
 	
 	public int getValue() {
@@ -56,7 +57,7 @@ public class Tile extends Observable {
 	 *
 	 * @param direction Direction dans laquelle effectuer le swipe
 	 */
-	public void swipe(SwipeDirectionEnum direction) {
+	public void swipe(EnumDirection direction) {
 		switch (direction) {
 			case EST:
 				if (est != null && !this.isEmpty()) {
@@ -70,7 +71,8 @@ public class Tile extends Observable {
 					
 					//si la prochaine case a droite possede la meme valeur, fusionne les cases
 					if (c.val == this.val) {
-						merge(c);
+						int val = merge(c);
+						grid.updateScore(val);
 					}
 					//sinon deplace la tuile le plus a droite possible
 					else if (!c.isEmpty() && c.west != this) {
@@ -94,7 +96,8 @@ public class Tile extends Observable {
 					
 					//si la prochaine case a gauche possede la meme valeur, fusionne les cases
 					if (c.val == this.val) {
-						merge(c);
+						int val = merge(c);
+						grid.updateScore(val);
 					}
 					//sinon deplace la tuile le plus a gauche possible
 					else if (!c.isEmpty() && c.west != this) {
@@ -118,7 +121,8 @@ public class Tile extends Observable {
 					
 					//si la prochaine case vers le haut possede la meme valeur, fusionne les cases
 					if (c.val == this.val) {
-						merge(c);
+						int val = merge(c);
+						grid.updateScore(val);
 					}
 					//sinon deplace la tuile le plus a droite possible
 					else if (!c.isEmpty() && c.south != this) {
@@ -142,7 +146,8 @@ public class Tile extends Observable {
 					
 					//si la prochaine case vers le bas possede la meme valeur, fusionne les cases
 					if (c.val == this.val) {
-						merge(c);
+						int val = merge(c);
+						grid.updateScore(val);
 					}
 					//sinon deplace la tuile le plus a droite possible
 					else if (!c.isEmpty() && c.north != this) {
@@ -170,17 +175,21 @@ public class Tile extends Observable {
 	}
 	
 	/**
-	 * La case (this) fusionne dans la case d'arrivée (donnée)
+	 * La case (this) fusionne vers la case d'arrivée donnée
 	 * dans l'unique cas ou les deux case ont la meme valeur.
 	 * this est alors vide (valeur 0)
 	 *
-	 * @param c La case avec laquelle this fusionne
+	 * @param c La case vers laquelle this fusionne.
+	 * @return Retourne la valeur de la case nouvellement formée,
+	 * retourn 0 si les cases n'ont pu fusionner.
 	 */
-	private void merge(Tile c) {
+	private int merge(Tile c) {
 		if (this.val == c.val) {
 			c.val *= 2;
 			this.val = 0;
+			return c.val;
 		}
+		return 0;
 	}
 	
 	@Override

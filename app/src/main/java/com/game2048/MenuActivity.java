@@ -12,16 +12,18 @@ public class MenuActivity extends AppCompatActivity {
 	private Button btnGridDown = null;
 	private TextView textGridSize = null;
 	private static int gridSize = 4;
+	private int maxGridSize;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_menu);
+		
+		maxGridSize = getResources().getInteger(R.integer.max_grid_size);
 		
 		btnGrid = findViewById(R.id.btnGrid);
 		btnGrid.setOnClickListener(v -> {
-			Intent intent = new Intent(MenuActivity.this, MainActivity.class);
+			Intent intent = new Intent(MenuActivity.this, GameActivity.class);
 			intent.putExtra("gridSize", gridSize);
 			startActivity(intent);
 		});
@@ -38,16 +40,16 @@ public class MenuActivity extends AppCompatActivity {
 			updateGridSizeTextView();
 		});
 		
+		//Init de la taille de grille choisie
 		textGridSize = findViewById(R.id.textGridSize);
-		
 		updateGridSizeTextView();
 	}
 	
 	private void updateGridSizeTextView() {
 		if (gridSize < 3)
 			gridSize = 3;
-		else if (gridSize > 8)
-			gridSize = 8;
+		else if (gridSize > maxGridSize)
+			gridSize = maxGridSize;
 		textGridSize.setText(gridSize + " x " + gridSize);
 	}
 }

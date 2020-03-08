@@ -1,16 +1,18 @@
 package com.game2048.core;
 
-import android.util.Log;
-import com.game2048.SwipeDirectionEnum;
+import com.game2048.core.util.EnumDirection;
+import com.game2048.core.util.Observable;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public class Grid {
+public class Grid extends Observable {
 	private int width, height;
+	private int score = 0;
 	private Tile[][] grid;
 	private Random rand = new Random();
+	private boolean gridFull = false;
 	
 	/**
 	 * Créé uen nouvelle grille carrée
@@ -37,58 +39,73 @@ public class Grid {
 		spawn();
 	}
 	
+	private List<Tile> casesVides() {
+		List<Tile> lst = new LinkedList<>();
+		for (int i = 0; i < height; i++)
+			for (int j = 0; j < width; j++) {
+				Tile c = grid[i][j];
+				if (c.isEmpty())
+					lst.add(c);
+			}
+		return lst;
+	}
 	
+	/**
+	 * La grille revient à un nouvel état de début de jeu.
+	 */
 	public void reset() {
 		for (Tile[] cs : grid) {
 			for (Tile c : cs) {
 				c.reset();
 			}
 		}
+		score = 0;
 		spawn();
 	}
 	
 	
 	/**
-	 * @return Retourne Vrai si au moins une nouvelle tuile a pu apparaitre.
-	 * Retourne faux si plus aucune place de dispo pour faire apparaitre de nouvelle tuile.
+	 * @return Retourne la valeur de la nouvelle tuile,
+	 * 0 si aucune n'a pu apparaitre.
+	 * Met à jour le score;
 	 */
-	public boolean spawn() {
+	public int spawn() {
 		List<Tile> casesVides = casesVides();
-		if (casesVides.isEmpty())
-			return false;
+		if (casesVides.isEmpty()) {
+			gridFull = true;
+			notifyObservers();
+			return 0;
+		}
 		
 		Tile caseAlea = casesVides.get(rand.nextInt(casesVides.size()));
-		
-		caseAlea.spawn(rand);
-		return true;
+		int val = caseAlea.spawn(rand);
+		score += val;
+		notifyObservers();
+		return val;
 	}
 	
-	public void swipe(SwipeDirectionEnum direction) {
+	public void swipe(EnumDirection direction) {
 		int col, lig;
 		switch (direction) {
 			case EST:
-				Log.d("swipeGrille", "Swipe droit !");
 				col = width - 1;
 				for (lig = 0; lig < height; lig++) {
 					grid[lig][col].swipe(direction);
 				}
 				break;
 			case WEST:
-				Log.d("swipeGrille", "Swipe gauche !");
 				col = 0;
 				for (lig = 0; lig < height; lig++) {
 					grid[lig][col].swipe(direction);
 				}
 				break;
 			case NORTH:
-				Log.d("swipeGrille", "Swipe haut !");
 				lig = 0;
 				for (col = 0; col < width; col++) {
 					grid[lig][col].swipe(direction);
 				}
 				break;
 			case SOUTH:
-				Log.d("swipeGrille", "Swipe bas !");
 				lig = height - 1;
 				for (col = 0; col < width; col++) {
 					grid[lig][col].swipe(direction);
@@ -106,18 +123,20 @@ public class Grid {
 		return width;
 	}
 	
-	public Tile getCaseLigCol(int lig, int col) {
+	public Tile getTileLigCol(int lig, int col) {
 		return grid[lig][col];
 	}
 	
-	private List<Tile> casesVides() {
-		List<Tile> lst = new LinkedList<>();
-		for (int i = 0; i < height; i++)
-			for (int j = 0; j < width; j++) {
-				Tile c = grid[i][j];
-				if (c.isEmpty())
-					lst.add(c);
-			}
-		return lst;
+	public int getScore() {
+		return score;
+	}
+	
+	public boolean isFull() {
+		return gridFull;
+	}
+	
+	public void updateScore(int val) {
+		score += val;
+		notifyObservers();
 	}
 }

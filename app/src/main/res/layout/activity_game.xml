@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal" android:gravity="center_vertical">
 
         <TextView
                 android:textColor="@color/textColor"
@@ -24,109 +24,54 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:text="2048"
-                android:textSize="45dp"/>
+                android:text="@string/app_name"
+                android:textSize="45dp" android:gravity="center" android:fontFamily="sans-serif-smallcaps"/>
 
         <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" android:layout_weight="2"/>
 
-        <Button
-                android:id="@+id/button"
+        <TextView
+                android:id="@+id/scoreView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
                 android:layout_weight="2"
-                android:background="@color/backgroundBtnColor"
-                android:text="Score"/>
+                android:text="@string/score" android:textSize="24sp" android:textColor="@color/textColor"
+                android:textStyle="bold" android:textAllCaps="true"/>
 
-        <Button
-                android:id="@+id/button2"
+        <TextView
+                android:id="@+id/timerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:background="@color/backgroundBtnColor"
-                android:text="Timer"/>
+                android:text="@string/timer" android:textSize="24sp" android:textColor="@color/textColor"
+                android:textStyle="bold" android:textAllCaps="true"/>
 
     </LinearLayout>
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:orientation="horizontal"
-            tools:layout_editor_absoluteX="69dp">
-
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_weight="1"
+            android:gravity="center_vertical">
         <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:textColor="@color/textColor"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Join the numbers and get to the"
-                android:textSize="15dp"/>
-
-        <TextView
-                android:id="@+id/textView4"
+                android:text="@string/shortDesc"
+                android:textSize="18sp" android:fontFamily="cursive" android:textAlignment="center"/>
+        <ImageButton
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:fontFamily="cursive"
-                android:textColor="@color/textColor"
-                android:text="2048 tile !"
-                android:textSize="18dp"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@color/backgroundColor"
-                android:drawableStart="@android:drawable/ic_menu_rotate"
-                android:paddingLeft="70dp"
-                android:textAlignment="textStart"
-                android:textColor="@color/textColor"
-                android:textSize="25dp" android:id="@+id/btnReload"/>
-
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/backgroundColor"
-                android:paddingRight="20dp"
-                android:paddingBottom="0dp"
-                android:text="Menu"
-                android:textColor="@color/textColor"
-                android:textSize="25dp" android:id="@+id/btnMenu"/>
-
+                android:id="@+id/btnReload" android:gravity="center"
+                android:src="@android:drawable/ic_menu_rotate"/>
     </LinearLayout>
 
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_weight="1">
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/btnLeft" android:layout_weight="1"
-                android:drawableStart="@android:drawable/ic_media_rew"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/btnUp" android:layout_weight="1"
-                android:drawableStart="@android:drawable/arrow_up_float"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/btnDown" android:layout_weight="1"
-                android:drawableRight="@android:drawable/arrow_down_float"/>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" android:id="@+id/btnRigth" android:layout_weight="1"
-                android:drawableRight="@android:drawable/ic_media_ff"/>
-    </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

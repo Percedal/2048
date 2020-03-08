@@ -1,7 +1,6 @@
 package com.game2048.view;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.LinearLayout;
 import com.game2048.R;
 import com.game2048.core.Grid;
@@ -17,7 +16,7 @@ public class GridView extends LinearLayout {
 			LinearLayout line = new LinearLayout(getContext());
 			line.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1));
 			for (int col = 0; col < grid.getWidth(); col++) {
-				Tile t = grid.getCaseLigCol(lig, col);
+				Tile t = grid.getTileLigCol(lig, col);
 				TileView v = new TileView(getContext(), t);
 				t.addObserver(v);
 				line.addView(v);

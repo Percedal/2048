@@ -40,7 +40,7 @@
                 android:text="@string/score" android:textSize="24sp" android:textColor="@color/textColor"
                 android:textStyle="bold" android:textAllCaps="true"/>
 
-        <TextView
+        <Chronometer
                 android:id="@+id/timerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

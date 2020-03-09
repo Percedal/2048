@@ -3,11 +3,13 @@ package com.game2048;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import com.game2048.core.Grid;
 import com.game2048.core.util.Observable;
@@ -24,7 +26,23 @@ public class GameActivity extends Activity implements Observer {
 	private View gridView;
 	private Grid grid;
 	private TextView scoreView;
+	private Chronometer timerView;
+	private long timeElapsed = 0;
 	
+	
+	@Override
+	protected void onResume() {
+		timerView.setBase(SystemClock.elapsedRealtime() - timeElapsed);
+		timerView.start();
+		super.onResume();
+	}
+	
+	@Override
+	protected void onPause() {
+		timerView.stop();
+		timeElapsed = SystemClock.elapsedRealtime() - timerView.getBase();
+		super.onPause();
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +51,7 @@ public class GameActivity extends Activity implements Observer {
 		
 		scoreView = findViewById(R.id.scoreView);
 		scoreView.setText("0");
+		timerView = findViewById(R.id.timerView);
 		
 		grid = new Grid(getIntent().getIntExtra("gridSize", 0));
 		grid.addObserver(this);
@@ -48,7 +67,7 @@ public class GameActivity extends Activity implements Observer {
 			public void onSwipeLeft() {
 				grid.swipe(WEST);
 			}
-
+			
 			public void onSwipeTop() {
 				grid.swipe(NORTH);
 			}
@@ -59,7 +78,11 @@ public class GameActivity extends Activity implements Observer {
 		});
 		container.addView(gridView);
 		
-		findViewById(R.id.btnReload).setOnClickListener(v -> grid.reset());
+		findViewById(R.id.btnReload).setOnClickListener(v -> {
+			grid.reset();
+			timeElapsed = 0;
+			timerView.setBase(SystemClock.elapsedRealtime());
+		});
 	}
 	
 	@Override

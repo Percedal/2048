@@ -26,6 +26,10 @@ public class TileView extends TextView implements Observer {
 	@Override
 	public void update(Observable observable) {
 		int val = ((Tile)observable).getValue();
-		setText(val == 0 ? " " : String.valueOf(val));
+		if(val != 0) {
+			setText(String.valueOf(val));
+		} else {
+			setText("");
+		}
 	}
 }

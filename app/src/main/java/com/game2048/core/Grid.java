@@ -130,6 +130,17 @@ public class Grid extends Observable {
 	public int getScore() {
 		return score;
 	}
+
+	public int getValueBiggestTile() {
+		int biggest = 0;
+		for (Tile[] cs : grid) {
+			for (Tile c : cs) {
+				if (c.getValue() > biggest)
+					biggest = c.getValue();
+			}
+		}
+		return biggest;
+	}
 	
 	public boolean isFull() {
 		return gridFull;

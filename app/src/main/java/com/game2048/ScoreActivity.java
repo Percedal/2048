@@ -12,13 +12,18 @@ public class ScoreActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_score);
 		
 		Intent intent = getIntent();
-		
+
+		int biggestTile = intent.getIntExtra("biggestTile", 1);
 		int score = intent.getIntExtra("score", 0);
-		long timer = intent.getLongExtra("timerInMilis", 1);
+		long time = intent.getLongExtra("timerInMilis", 1);
+		long min = time/60000;
+		String strMin = min > 9 ? String.valueOf(min) : "0"+min;
+		long sec = (time/1000)%60;
+		String strSec = sec > 9 ? String.valueOf(sec) : "0"+sec;
 		
 		findViewById(R.id.btnMenu).setOnClickListener(v -> finish());
 		((TextView) findViewById(R.id.scoreBox)).setText("" + score);
-		((TextView) findViewById(R.id.timerBox)).setText("" + timer);
-		((TextView) findViewById(R.id.finalScoreBox)).setText("" + Math.round(score * Math.log10(timer)));
+		((TextView) findViewById(R.id.timerBox)).setText(strMin+":"+strSec);
+		((TextView) findViewById(R.id.finalScoreBox)).setText("" + Math.round(score / Math.log10(time) * Math.log(biggestTile)/Math.log(2)));
 	}
 }

@@ -11,7 +11,7 @@ import com.game2048.core.util.Observer;
 
 
 public class TileView extends TextView implements Observer {
-	private static final int TEXT_SIZE = 50;
+	private static final int TEXT_SIZE = 40;
 	private int GRID_SIZE;
 	private int baseTextSize;
 	

@@ -7,16 +7,20 @@ import java.util.Random;
 
 public class Tile extends Observable {
 	private final Grid grid;
+	
 	private int val = 0;
 	private int x, y;
 	private Tile north, south, est, west;
-	
 	
 	public Tile(Grid _grid, int x, int y) {
 		this.grid = _grid;
 		this.x = x;
 		this.y = y;
 		this.val = 0;
+	}
+	
+	public Grid getGrid() {
+		return grid;
 	}
 	
 	public void updateNeibourgh() {

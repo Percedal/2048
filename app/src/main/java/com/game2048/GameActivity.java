@@ -2,9 +2,9 @@ package com.game2048;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -27,6 +27,7 @@ public class GameActivity extends Activity implements Observer {
 	private Grid grid;
 	private TextView scoreView;
 	private Chronometer timerView;
+	//Temps de jeu en µs
 	private long timeElapsed = 0;
 	
 	
@@ -90,7 +91,12 @@ public class GameActivity extends Activity implements Observer {
 		Grid g = (Grid) observable;
 		if (g.isFull()) {
 			this.finish();
-			Log.d("Grille", "You Lose");
+			if (timeElapsed == 0)
+				timeElapsed = SystemClock.elapsedRealtime() - timerView.getBase();
+			Intent intent = new Intent(this, ScoreActivity.class);
+			intent.putExtra("score", grid.getScore());
+			intent.putExtra("timerInMilis", timeElapsed);
+			startActivity(intent);
 		}
 		scoreView.setText(String.valueOf(g.getScore()));
 	}

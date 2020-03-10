@@ -2,9 +2,9 @@ package com.game2048;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +15,7 @@ import com.game2048.core.Grid;
 import com.game2048.core.util.Observable;
 import com.game2048.core.util.Observer;
 import com.game2048.view.GridView;
+import com.game2048.view.OnSwipeTouchListener;
 
 import static com.game2048.core.util.EnumDirection.*;
 
@@ -27,6 +28,7 @@ public class GameActivity extends Activity implements Observer {
 	private Grid grid;
 	private TextView scoreView;
 	private Chronometer timerView;
+	//Temps de jeu en µs
 	private long timeElapsed = 0;
 	
 	
@@ -90,74 +92,14 @@ public class GameActivity extends Activity implements Observer {
 		Grid g = (Grid) observable;
 		if (g.isFull()) {
 			this.finish();
-			Log.d("Grille", "You Lose");
+			if (timeElapsed == 0)
+				timeElapsed = SystemClock.elapsedRealtime() - timerView.getBase();
+			Intent intent = new Intent(this, ScoreActivity.class);
+			intent.putExtra("score", grid.getScore());
+			intent.putExtra("timerInMilis", timeElapsed);
+			intent.putExtra("biggestTile", grid.getValueBiggestTile());
+			startActivity(intent);
 		}
 		scoreView.setText(String.valueOf(g.getScore()));
-	}
-	
-	/**
-	 * Listener des swipe
-	 */
-	private abstract class OnSwipeTouchListener implements View.OnTouchListener {
-		private final GestureDetector swipeGesture;
-		
-		public OnSwipeTouchListener(Context ctx) {
-			swipeGesture = new GestureDetector(ctx, new SwipeListener());
-		}
-		
-		@Override
-		public boolean onTouch(View v, MotionEvent event) {
-			return swipeGesture.onTouchEvent(event);
-		}
-		
-		abstract public void onSwipeRight();
-		
-		abstract public void onSwipeLeft();
-		
-		abstract public void onSwipeTop();
-		
-		abstract public void onSwipeBottom();
-		
-		/**
-		 * Gestionnaire des swipe
-		 */
-		private final class SwipeListener extends GestureDetector.SimpleOnGestureListener {
-			private static final int SWIPE_THRESHOLD = 100;
-			private static final int SWIPE_VELOCITY_THRESHOLD = 100;
-			
-			@Override
-			public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-				boolean result = false;
-				try {
-					float diffY = e2.getY() - e1.getY();
-					float diffX = e2.getX() - e1.getX();
-					if (Math.abs(diffX) > Math.abs(diffY)) {
-						if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-							if (diffX > 0) {
-								onSwipeRight();
-							} else {
-								onSwipeLeft();
-							}
-							result = true;
-						}
-					} else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-						if (diffY > 0) {
-							onSwipeBottom();
-						} else {
-							onSwipeTop();
-						}
-						result = true;
-					}
-				} catch (Exception exception) {
-					exception.printStackTrace();
-				}
-				return result;
-			}
-
-			@Override
-			public boolean onDown(MotionEvent e) {
-				return true;
-			}
-		}
 	}
 }
